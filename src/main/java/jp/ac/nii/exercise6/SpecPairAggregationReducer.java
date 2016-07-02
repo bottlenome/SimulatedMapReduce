@@ -15,8 +15,12 @@ public class SpecPairAggregationReducer extends Reducer<String, Integer, NullWri
 	@Override
 	public void reduce(String key, Iterable<Integer> values, Context context) {
 		// TODO: 「商品X,商品Y」という商品ペアの出現頻度を計算しよう
-
+		int sum = 0;
+		// TODO: ワードカウントと同じ要領でvaluesの合計を計算して、keyの商品の出現回数を計算しよう
+		for (Integer value : values) {
+			sum += value;
+		}
 		// TODO: キーはなしで、「商品X,商品Y,ペアの出現頻度」というバリューを出力しよう
-		context.write(nullWritable, "" /* TODO: 修正しよう */);
+		context.write(nullWritable, key + "," + sum);
 	}
 }

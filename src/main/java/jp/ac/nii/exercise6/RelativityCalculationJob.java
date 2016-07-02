@@ -64,8 +64,8 @@ public class RelativityCalculationJob {
 	public static class RelativityCalculationPartitioner extends HashPartitioner<String, String> {
 		@Override
 		public int getPartition(String key, String value, int numReduceTasks) {
-			// TODO: removeSharp()とsuper.getPartition()メソッドを活用しよう
-			return 0;	// 注意: return 0; は誤りです
+			// TODO:removeSharp()とsuper.getPartition()メソッドを活用しよう
+			return super.getPartition(removeSharpD(key), value, numReduceTasks);	// 注意: return 0; は誤りです
 		}
 	}
 
@@ -78,7 +78,7 @@ public class RelativityCalculationJob {
 		@Override
 		public int compare(String a, String b) {
 			// TODO: removeSharp()とString.compareTo()メソッドを活用しよう
-			return 0;	// 注意: return 0; は誤りです
+			return removeSharpD(a).compareTo(removeSharpD(b));	// 注意: return 0; は誤りです
 		}
 	}
 
@@ -92,7 +92,7 @@ public class RelativityCalculationJob {
 		@Override
 		public int compare(String a, String b) {
 			// TODO: String.compareTo()メソッドを活用しよう
-			return 0;	// 注意: return 0; は誤りです
+			return removeSharpD(a).compareTo(removeSharpD(b));	// 注意: return 0; は誤りです
 		}
 	}
 }

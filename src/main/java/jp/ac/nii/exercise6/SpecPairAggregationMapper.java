@@ -1,5 +1,7 @@
 package jp.ac.nii.exercise6;
 
+import java.util.Arrays;
+
 import jp.ac.nii.mapreduceframework.Context;
 import jp.ac.nii.mapreduceframework.Mapper;
 
@@ -14,5 +16,8 @@ public class SpecPairAggregationMapper extends Mapper<Long, String, String, Inte
 		
 		// 商品ペアの名前を昇順でソートすることで、例えば、「あんドーナツ,生シュークリーム」と「生シュークリーム,あんドーナツ」など、
 		// 実質は同じだが順序が異なるペアを「あんドーナツ,生シュークリーム」という一つのペアに集約することができる
+		String[] words = value.split(",");
+		Arrays.sort(words);
+		context.write(words[0] + "," + words[1], 1);
 	}
 }

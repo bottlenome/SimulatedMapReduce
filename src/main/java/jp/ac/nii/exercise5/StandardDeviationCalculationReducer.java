@@ -24,6 +24,9 @@ public class StandardDeviationCalculationReducer extends Reducer<String, Integer
 			Scanner scanner = new Scanner(intput, "UTF-8");
 			while (scanner.hasNextLine()) {
 				// TODO: subject2Averageに科目名と平均値のキーバリューを保存しよう
+				String[] keyValue = scanner.nextLine().split("\t");
+				// 平均値データの設定
+				subject2Average.put(keyValue[0], Double.valueOf(keyValue[1]));
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
@@ -35,5 +38,13 @@ public class StandardDeviationCalculationReducer extends Reducer<String, Integer
 	protected void reduce(String key, Iterable<Integer> values, Context context) {
 		// TODO: 分散を計算しよう
 		// ヒント: subject2Average フィールドを使おう！
+		double sum = 0;
+		double average = subject2Average.get(key);
+		int count = 0;
+		for (Integer value : values) {
+			sum += Math.pow((value - average), 2);
+			count += 1;
+		}
+		context.write(key, Math.sqrt(sum/count));
 	}
 }

@@ -20,15 +20,16 @@ public class RelativityCalculationReducer extends Reducer<String, String, NullWr
 		// ヒント1: 正しく他のファイルが書けていれば、valuesの先頭は分母データで、2個目以降は分子データになる
 		// ヒント2: 正しく他のファイルが書けていれば、keyは「あんドーナツ#d」というように、末尾に#dが付いている
 		
-		String goodsName = null /* TODO: 商品Xの名前を設定 */;
+		String goodsName = key.replace("#d", "") /* 商品Xの名前を設定 */;
 		Iterator<String> iterator = values.iterator();
 
 		// 一番最初のvalueが分母になるようにソート済み（RelativityCalculationJob）
 		int denominator = Integer.parseInt(iterator.next());
 
 		while (iterator.hasNext()) {
-			String pairGoodsName = null /* TODO: 関連度を計算する商品Yの名前を設定 */;
-			double relativity = 0.0 /* TODO: 関連度を計算 */;
+			String[] words = iterator.next().split(",");
+			String pairGoodsName = words[0] /* TODO: 関連度を計算する商品Yの名前を設定 */;
+			double relativity = Double.valueOf(words[1])/ denominator /* TODO: 関連度を計算 */;
 
 			// 関連度が低すぎる（0.025以下）ペアは関連していないとみなしてフィルタリング
 			if (relativity > 0.025) {
